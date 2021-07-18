@@ -12,37 +12,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="691.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.MainWindowController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As..." />
-                  <MenuItem mnemonicParsing="false" onAction="#importFile" text="Load..." />
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Search" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.MainWindowController">
    <center>
       <TableView fx:id="itemTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <columns>
-            <TableColumn fx:id="SerialNumberColumn" minWidth="100.0" onEditCommit="#changeSerialNumberCellEvent" prefWidth="75.0" text="Serial Number" />
-            <TableColumn fx:id="NameColumn" onEditCommit="#changeNameCellEvent" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="PriceColumn" onEditCommit="#changePriceCellEvent" prefWidth="75.0" text="Price" />
+            <TableColumn fx:id="SerialNumberColumn" minWidth="150.0" onEditCommit="#changeSerialNumberCellEvent" prefWidth="75.0" text="Serial Number" />
+            <TableColumn fx:id="NameColumn" minWidth="100.0" onEditCommit="#changeNameCellEvent" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="PriceColumn" minWidth="100.0" onEditCommit="#changePriceCellEvent" prefWidth="75.0" text="Price ($)" />
          </columns></TableView>
    </center>
    <bottom>
@@ -71,4 +49,48 @@
          </children>
       </VBox>
    </bottom>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As..." />
+                        <MenuItem mnemonicParsing="false" onAction="#importFile" text="Load..." />
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Search" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox spacing="10.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search Bar">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="20.0" right="2.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="filterField" prefHeight="25.0" prefWidth="590.0" promptText="Search for items by their Name or Serial Number">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="2.0" top="2.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
 </BorderPane>

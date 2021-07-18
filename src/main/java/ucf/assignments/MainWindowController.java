@@ -1,5 +1,7 @@
 package ucf.assignments;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -28,6 +30,7 @@ public class MainWindowController {
     public TableColumn SerialNumberColumn;
     public TableColumn NameColumn;
     public TableColumn PriceColumn;
+    public TextField filterField;
 
 
     ItemHolder holder = new ItemHolder();
@@ -40,7 +43,6 @@ public class MainWindowController {
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         PriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        itemTable.setItems(ItemHolder.itemList);
         itemTable.setEditable(true);
         SerialNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         NameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -55,6 +57,40 @@ public class MainWindowController {
                 }
             }
         }));
+
+        FilteredList<Item> filteredData = new FilteredList<>(ItemHolder.itemList, b -> true);
+
+        // 2. Set the filter Predicate whenever the filter changes.
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(item -> {
+                // If filter text is empty, display all persons.
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Compare first name and last name of every person with filter text.
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (item.getName().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+                    return true; // Filter matches first name.
+                } else if (item.getSerialNumber().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true; // Filter matches last name.
+                }
+                else
+                    return false; // Does not match.
+            });
+        });
+
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Item> sortedData = new SortedList<>(filteredData);
+
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        // 	  Otherwise, sorting the TableView would have no effect.
+        sortedData.comparatorProperty().bind(itemTable.comparatorProperty());
+
+        // 5. Add sorted (and filtered) data to the table.
+        itemTable.setItems(sortedData);
     }
 
     public void changeSerialNumberCellEvent(TableColumn.CellEditEvent editedCell){
