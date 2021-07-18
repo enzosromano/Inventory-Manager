@@ -8,6 +8,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.StringTokenizer;
 
 public class MainWindowMethods {
 
@@ -21,8 +22,9 @@ public class MainWindowMethods {
         if(itemSerialNumber.length() != 10){
             return false;
         }
-        for(String serialNum: ItemHolder.Serials){
-            if(serialNum.equalsIgnoreCase(itemSerialNumber)){
+        for(int i = 0; i < ItemHolder.itemList.size(); i++){
+            if(ItemHolder.itemList.get(i).getSerialNumber().equals(itemSerialNumber)){
+                System.out.println(itemSerialNumber + " does match");
                 return false;
             }
         }
@@ -83,6 +85,9 @@ public class MainWindowMethods {
             else if(fileExtension.equalsIgnoreCase("html")){
                 return exportToHtml(toSave);
             }
+            else if(fileExtension.equalsIgnoreCase("txt")){
+                return exportToTsv(toSave);
+            }
 
         }
 
@@ -101,8 +106,12 @@ public class MainWindowMethods {
 
             for (JSONObject object : (Iterable<JSONObject>) itemList) {
                 BigDecimal price = new BigDecimal(object.get("price").toString());
-                ItemHolder.itemList.add(new Item(price, object.get("serialNumber").toString(),
-                        object.get("name").toString()));
+                String serial = object.get("serialNumber").toString();
+                String name = object.get("name").toString();
+
+                if(verifySerialNumber(serial)) {
+                    ItemHolder.itemList.add(new Item(price, serial, name));
+                }
             }
 
             return true;
@@ -113,6 +122,63 @@ public class MainWindowMethods {
 
         System.out.println("Uh Oh");
         return false;
+    }
+
+    public boolean importHtml(File toImport){
+
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(toImport));
+            String str;
+            while ((str = in.readLine()) != null) {
+                contentBuilder.append(str);
+            }
+            in.close();
+            String[] lines = contentBuilder.toString().split("<br>");
+            for(String s: lines){
+                if(s.length() != 0){
+
+                    StringTokenizer tokenizer = new StringTokenizer(s, " ");
+
+                    BigDecimal price = new BigDecimal(tokenizer.nextToken());
+                    String serial = tokenizer.nextToken();
+                    String name = tokenizer.nextToken();
+
+                    if(verifySerialNumber(serial)){
+                        ItemHolder.itemList.add(new Item(price, serial, name));
+                    }
+                }
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public boolean importTsv(File toImport){
+
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(toImport));
+            String str;
+            while ((str = in.readLine()) != null) {
+                StringTokenizer tokenizer = new StringTokenizer(str, "\t");
+
+                BigDecimal price = new BigDecimal(tokenizer.nextToken());
+                String serial = tokenizer.nextToken();
+                String name = tokenizer.nextToken();
+
+                if(verifySerialNumber(serial)) {
+                    ItemHolder.itemList.add(new Item(price, serial, name));
+                }
+            }
+            in.close();
+
+        } catch (IOException e) {
+            return false;
+        }
+
+        return true;
     }
 
     public boolean exportToJson(File toSave){
@@ -175,6 +241,34 @@ public class MainWindowMethods {
         }
 
         return true;
+    }
+
+    public boolean exportToTsv(File toSave){
+
+        if(ItemHolder.itemList.isEmpty()){
+            return false;
+        }
+
+        try {
+            PrintWriter writer = new PrintWriter(toSave);
+            StringBuilder outputString = new StringBuilder();
+            for (int i = 0; i < ItemHolder.itemList.size(); i++) {
+                Item currentItem = ItemHolder.itemList.get(i);
+
+                outputString.append(currentItem.getPrice() + "\t");
+                outputString.append(currentItem.getSerialNumber() + "\t");
+                outputString.append(currentItem.getName());
+                outputString.append("\n");
+            }
+            writer.write(String.valueOf(outputString));
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+
     }
 
 }

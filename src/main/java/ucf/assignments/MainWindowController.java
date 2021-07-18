@@ -105,7 +105,8 @@ public class MainWindowController {
         fileChooser.setTitle("Save");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json"),
-                new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html"));
+                new FileChooser.ExtensionFilter("HTML files (*.html)", "*.html"),
+                new FileChooser.ExtensionFilter("TSV files (*.txt)", "*.txt"));
 
         File toSave = fileChooser.showSaveDialog(null);
         if(!methods.exportFile(toSave)){
@@ -129,7 +130,14 @@ public class MainWindowController {
             }
         }
         else if(fileExtension.equalsIgnoreCase("html")){
-
+            if(!methods.importHtml(toImport)){
+                ErrorOutput.setText("Could not import HTML file!");
+            }
+        }
+        else if(fileExtension.equalsIgnoreCase("txt")){
+            if(!methods.importTsv(toImport)){
+                ErrorOutput.setText("Could not import TSV file!");
+            }
         }
 
     }
