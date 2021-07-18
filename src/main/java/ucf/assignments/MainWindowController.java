@@ -32,6 +32,7 @@ public class MainWindowController {
 
     ItemHolder holder = new ItemHolder();
     MainWindowMethods methods = new MainWindowMethods();
+    FileManagement fileManager = new FileManagement();
 
     public void initialize() {
 
@@ -109,7 +110,7 @@ public class MainWindowController {
                 new FileChooser.ExtensionFilter("TSV files (*.txt)", "*.txt"));
 
         File toSave = fileChooser.showSaveDialog(null);
-        if(!methods.exportFile(toSave)){
+        if(!fileManager.exportFile(toSave)){
             ErrorOutput.setText("Could not export");
         }
     }
@@ -125,17 +126,17 @@ public class MainWindowController {
 
 
         if(fileExtension.equalsIgnoreCase("json")){
-            if(!methods.importJson(toImport)){
+            if(!fileManager.importJson(toImport)){
                 ErrorOutput.setText("Could not import JSON file!");
             }
         }
         else if(fileExtension.equalsIgnoreCase("html")){
-            if(!methods.importHtml(toImport)){
+            if(!fileManager.importHtml(toImport)){
                 ErrorOutput.setText("Could not import HTML file!");
             }
         }
         else if(fileExtension.equalsIgnoreCase("txt")){
-            if(!methods.importTsv(toImport)){
+            if(!fileManager.importTsv(toImport)){
                 ErrorOutput.setText("Could not import TSV file!");
             }
         }
