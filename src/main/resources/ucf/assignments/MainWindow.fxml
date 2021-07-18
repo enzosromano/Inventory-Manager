@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -18,8 +19,8 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Save As..." />
-                  <MenuItem mnemonicParsing="false" text="Load..." />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As..." />
+                  <MenuItem mnemonicParsing="false" onAction="#importFile" text="Load..." />
               <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
@@ -37,7 +38,12 @@
       </MenuBar>
    </top>
    <center>
-      <TableView fx:id="itemTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <TableView fx:id="itemTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn fx:id="SerialNumberColumn" minWidth="100.0" onEditCommit="#changeSerialNumberCellEvent" prefWidth="75.0" text="Serial Number" />
+            <TableColumn fx:id="NameColumn" onEditCommit="#changeNameCellEvent" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="PriceColumn" onEditCommit="#changePriceCellEvent" prefWidth="75.0" text="Price" />
+         </columns></TableView>
    </center>
    <bottom>
       <VBox BorderPane.alignment="CENTER">
