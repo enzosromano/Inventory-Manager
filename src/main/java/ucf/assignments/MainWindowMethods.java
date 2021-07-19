@@ -46,7 +46,7 @@ public class MainWindowMethods {
 
     public boolean makeNewTaskMethod(BigDecimal itemPrice, String itemName, String itemSerialNumber) {
 
-        if(!verifyName(itemName) || !verifySerialNumber(itemSerialNumber)){
+        if(!verifyName(itemName) || !verifySerialNumber(itemSerialNumber) || !verifyPrice(itemPrice)){
             return false;
         }
 
@@ -57,8 +57,13 @@ public class MainWindowMethods {
     }
 
     public boolean deleteItemMethod(Item toDelete){
-        ItemHolder.itemList.remove(toDelete);
-        return true;
+
+        if(ItemHolder.itemList.contains(toDelete)){
+            ItemHolder.itemList.remove(toDelete);
+            return true;
+        }
+
+        return false;
     }
 
 
