@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 5 Solution
+ *  Copyright 2021 Enzo Romano
+ */
+
 package ucf.assignments;
 
 import javafx.collections.transformation.FilteredList;
@@ -10,13 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.util.converter.BigDecimalStringConverter;
-import javafx.util.converter.DoubleStringConverter;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 
 public class MainWindowController {
