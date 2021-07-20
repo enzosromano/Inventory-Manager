@@ -32,7 +32,7 @@ Search:
 
 ## Column Headers:
 ### Tells the user what item information is being displayed within the column
-
+ 
 
 ## Table elements:
 ### Displays the items currently within our Item Holder
@@ -57,7 +57,7 @@ Search:
 
 ## Error field:
 ### Displays constraints or errors within the program
-
+ 
 
 ## Delete selected Item:
 ### Deletes an item that the user has selected
