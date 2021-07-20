@@ -1,0 +1,6 @@
+13.99	aaaaaaaaaa	Chairs
+24.99	bbbbbbbbbb	Table
+2.99	cccccccccc	Table Cover
+21.99	dddddddddd	Silverware
+0.99	eeeeeeeeee	Napkins
+7.98	ffffffffff	Cups

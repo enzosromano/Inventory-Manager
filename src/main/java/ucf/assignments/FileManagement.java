@@ -71,7 +71,6 @@ public class FileManagement {
             e.printStackTrace();
         }
 
-        System.out.println("Uh Oh");
         return false;
     }
 
@@ -89,7 +88,7 @@ public class FileManagement {
             for(String s: lines){
                 if(s.length() != 0){
 
-                    StringTokenizer tokenizer = new StringTokenizer(s, " ");
+                    StringTokenizer tokenizer = new StringTokenizer(s, "-");
 
                     BigDecimal price = new BigDecimal(tokenizer.nextToken());
                     String serial = tokenizer.nextToken();
@@ -179,8 +178,8 @@ public class FileManagement {
             for (int i = 0; i < ItemHolder.itemList.size(); i++) {
                 Item currentItem = ItemHolder.itemList.get(i);
 
-                outputString.append(currentItem.getPrice() + " ");
-                outputString.append(currentItem.getSerialNumber() + " ");
+                outputString.append(currentItem.getPrice() + "-");
+                outputString.append(currentItem.getSerialNumber() + "-");
                 outputString.append(currentItem.getName());
                 outputString.append("<br>");
             }
