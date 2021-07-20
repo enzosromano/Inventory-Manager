@@ -1,11 +1,50 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+class Main{
+    start()
+    main()
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+class MainWindowController{
+
+}
+
+class MainWindowMethods{
+
+}
+
+class FileManagement{
+
+}
+
+class ItemHolder{
+
+    ObservableList<Item> itemList
+    Set<String> Serials
+
+}
+
+class Item{
+
+    BigDecimal price
+    String serialNumber
+    String Name
+
+    + BigDecimal getPrice()
+    + void setPrice()
+    + String getSerialNumber()
+    + void setSerialNumber()
+    + String getName()
+    + void setName()
+
+}
+
+Main -- MainWindowController
+MainWindowController -- MainWindowMethods
+MainWindowController -- FileManagement
+MainWindowMethods -- ItemHolder
+FileManagement -- ItemHolder
+ItemHolder -- Item
+
 @enduml
