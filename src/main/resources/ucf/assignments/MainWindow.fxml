@@ -58,19 +58,14 @@
                   <items>
                         <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As..." />
                         <MenuItem mnemonicParsing="false" onAction="#importFile" text="Load..." />
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Close" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Search" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
+                  <Menu mnemonicParsing="false" text="Items">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#deleteAll" text="Delete All" />
+                    </items>
+                  </Menu>
               </menus>
             </MenuBar>
             <HBox spacing="10.0">

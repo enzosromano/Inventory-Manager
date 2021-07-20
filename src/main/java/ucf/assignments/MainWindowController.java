@@ -217,4 +217,14 @@ public class MainWindowController {
 
     }
 
+    //Deletes all tasks currently in our inventory
+    public void deleteAll(){
+        ItemHolder.itemList.clear();
+    }
+
+    //Exits the program
+    public void exitProgram(){
+        System.exit(0);
+    }
+
 }
