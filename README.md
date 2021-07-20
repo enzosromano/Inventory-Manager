@@ -14,6 +14,10 @@ File:
     
     - Close: Exits the program
 
+Items:
+
+    - Delete All: Clicking this will delete all items currently in our list
+
 ## Search Bar:
 ### Allows the user to search by keyword
 Search:
