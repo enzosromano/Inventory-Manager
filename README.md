@@ -18,6 +18,7 @@ Items:
 
     - Delete All: Clicking this will delete all items currently in our list
 
+
 ## Search Bar:
 ### Allows the user to search by keyword
 Search:
@@ -28,13 +29,16 @@ Search:
 
     - Users can ONLY search by the items name or serial number, not price
 
+
 ## Column Headers:
 ### Tells the user what item information is being displayed within the column
+
 
 ## Table elements:
 ### Displays the items currently within our Item Holder
 
     - The tableview will display "No content in table" when there are no items to display
+
 
 ## Add New Item bar:
 ### Allows the user to add an item to our Item Holder
@@ -50,8 +54,10 @@ Search:
     - If the users input DOES meet the constraints, clicking "Add New Item" will create
     a new item and add it to our list
 
+
 ## Error field:
 ### Displays constraints or errors within the program
+
 
 ## Delete selected Item:
 ### Deletes an item that the user has selected
