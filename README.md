@@ -1,7 +1,5 @@
 # Inventory Manager Read-Me
 
-This tutorial will walk you through the program from the top down
-
 ## Menu bar:
 ### Contains the "File" and "Items" menu buttons
 File:
