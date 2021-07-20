@@ -31,11 +31,10 @@ public class MainWindowController {
     public TableColumn PriceColumn;
     public TextField filterField;
 
-
-    ItemHolder holder = new ItemHolder();
     MainWindowMethods methods = new MainWindowMethods();
     FileManagement fileManager = new FileManagement();
 
+    //Called everytime the main view is shown
     public void initialize() {
 
         SerialNumberColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
@@ -45,6 +44,8 @@ public class MainWindowController {
         itemTable.setEditable(true);
         SerialNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         NameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        /*User input will be stored as a string when editing in the tableview, use a converter
+        and a try catch statement to manipulate user input to follow our format*/
         PriceColumn.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter(){
             @Override
             public BigDecimal fromString(String value) {
@@ -57,41 +58,35 @@ public class MainWindowController {
             }
         }));
 
+        //The following code in this method is used to control our search bar functionality
         FilteredList<Item> filteredData = new FilteredList<>(ItemHolder.itemList, b -> true);
-
-        // 2. Set the filter Predicate whenever the filter changes.
         filterField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(item -> {
-                // If filter text is empty, display all persons.
 
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
-                // Compare first name and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
 
+                //Compare names and serial numbers to find matches
                 if (item.getName().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
-                    return true; // Filter matches first name.
+                    return true;
                 } else if (item.getSerialNumber().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-                    return true; // Filter matches last name.
+                    return true;
                 }
                 else
                     return false; // Does not match.
             });
         });
 
-        // 3. Wrap the FilteredList in a SortedList.
+        //Put our items into a sorted list and display that particular list when using our search bar
         SortedList<Item> sortedData = new SortedList<>(filteredData);
-
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        // 	  Otherwise, sorting the TableView would have no effect.
         sortedData.comparatorProperty().bind(itemTable.comparatorProperty());
-
-        // 5. Add sorted (and filtered) data to the table.
         itemTable.setItems(sortedData);
     }
 
+    //Method to control our editing serial number functionality
     public void changeSerialNumberCellEvent(TableColumn.CellEditEvent editedCell){
 
         Item itemSelected = itemTable.getSelectionModel().getSelectedItem();
@@ -101,12 +96,12 @@ public class MainWindowController {
         }
         else{
             ErrorOutput.setText("Serials: Combination of 10 letters/numbers (No Duplicates!)");
-            System.out.println(itemSelected.getSerialNumber());
             initialize();
         }
 
     }
 
+    //Method to control our editing name functionality
     public void changeNameCellEvent(TableColumn.CellEditEvent editedCell){
 
         Item itemSelected = itemTable.getSelectionModel().getSelectedItem();
@@ -121,6 +116,7 @@ public class MainWindowController {
 
     }
 
+    //Method to control our editing name functionality
     public void changePriceCellEvent(TableColumn.CellEditEvent editedCell){
 
         Item itemSelected = itemTable.getSelectionModel().getSelectedItem();
@@ -136,6 +132,7 @@ public class MainWindowController {
 
     }
 
+    //Method to control our export functionality; prompts a file chooser for the user to interact with
     public void saveAs(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save");
@@ -150,6 +147,7 @@ public class MainWindowController {
         }
     }
 
+    //Method to control our import functionality; prompts a file chooser for the user to interact with
     public void importFile(){
         FileChooser fileChooser = new FileChooser();
         File toImport = fileChooser.showOpenDialog(null);
@@ -178,6 +176,7 @@ public class MainWindowController {
 
     }
 
+    //Method to create a new task on the user interface, all fields must be full and inputs must be verified
     public void makeNewTask() {
 
         String nameInput = ItemNameField.getText();
@@ -208,6 +207,7 @@ public class MainWindowController {
 
     }
 
+    //Method that gets our currently selected task and removes it from our ItemHolder
     public void deleteTask() {
 
         Item toDelete = itemTable.getSelectionModel().getSelectedItem();

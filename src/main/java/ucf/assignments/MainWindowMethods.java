@@ -9,12 +9,15 @@ import java.math.BigDecimal;
 
 public class MainWindowMethods {
 
+    //Verify name input matches constraints
     public boolean verifyName(String itemName){
         if(itemName.length() < 2 || itemName.length() > 256){
             return false;
         }
         return true;
     }
+
+    //Verify serial number input matches constraints
     public boolean verifySerialNumber(String itemSerialNumber){
         if(itemSerialNumber.length() != 10){
             return false;
@@ -33,6 +36,7 @@ public class MainWindowMethods {
         return true;
     }
 
+    //Verify price input matches constraints
     public boolean verifyPrice(BigDecimal itemPrice){
         if(itemPrice != null){
             return true;
@@ -40,7 +44,7 @@ public class MainWindowMethods {
         return false;
     }
 
-
+    //Method to add a task to our ItemHolder; will not add a task if it does not meet constraints
     public boolean makeNewTaskMethod(BigDecimal itemPrice, String itemName, String itemSerialNumber) {
 
         if(!verifyName(itemName) || !verifySerialNumber(itemSerialNumber) || !verifyPrice(itemPrice)){
@@ -53,6 +57,7 @@ public class MainWindowMethods {
 
     }
 
+    //Method to delete an item from our ItemHolder
     public boolean deleteItemMethod(Item toDelete){
 
         if(ItemHolder.itemList.contains(toDelete)){
