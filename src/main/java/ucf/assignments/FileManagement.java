@@ -8,6 +8,10 @@ package ucf.assignments;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -82,34 +86,30 @@ public class FileManagement {
     //Method to import items from a .html file into our ItemHolder
     public boolean importHtml(File toImport){
 
-        StringBuilder contentBuilder = new StringBuilder();
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(toImport));
-            String str;
-            while ((str = in.readLine()) != null) {
-                contentBuilder.append(str);
-            }
-            in.close();
-            String[] lines = contentBuilder.toString().split("<br>");
-            for(String s: lines){
-                if(s.length() != 0){
+        try{
+            Document doc = Jsoup.parse(toImport, "UTF-8", "");
+            Element table = doc.select("table").get(0);
+            Elements rows = table.select("tr");
 
-                    //Split our item values by a "-" character
-                    StringTokenizer tokenizer = new StringTokenizer(s, "-");
+            //Go through our table and parse every single row
+            for (int i = 1; i < rows.size(); i++) {
 
-                    BigDecimal price = new BigDecimal(tokenizer.nextToken());
-                    String serial = tokenizer.nextToken();
-                    String name = tokenizer.nextToken();
+                Elements tds = rows.select("td");
+                BigDecimal price = new BigDecimal(tds.get(0).text());
+                String serial = tds.get(1).text();
+                String name = tds.get(2).text();
 
-                    if(methods.verifySerialNumber(serial)){
-                        ItemHolder.itemList.add(new Item(price, serial, name));
-                    }
+                if(methods.verifySerialNumber(serial)){
+                    ItemHolder.itemList.add(new Item(price, serial, name));
                 }
             }
-        } catch (IOException e) {
+            return true;
+        }
+        catch(IOException exception){
             return false;
         }
-        return true;
+
+
     }
 
     //Method to import items from a .txt file into our ItemHolder
@@ -182,14 +182,27 @@ public class FileManagement {
         try {
             PrintWriter writer = new PrintWriter(toSave);
             StringBuilder outputString = new StringBuilder();
+
+            //Set table title and column headers
+            outputString.append("<html>" + "<head>table</head>" + "<body>" + "<table border = '1'>");
+            outputString.append("<tr>");
+            outputString.append("<td>Price</td>");
+            outputString.append("<td>Serial Number</td>");
+            outputString.append("<td>Name</td>");
+            outputString.append("</tr>");
+            //Add our items to our table
             for (int i = 0; i < ItemHolder.itemList.size(); i++) {
                 Item currentItem = ItemHolder.itemList.get(i);
 
-                outputString.append(currentItem.getPrice() + "-");
-                outputString.append(currentItem.getSerialNumber() + "-");
-                outputString.append(currentItem.getName());
-                outputString.append("<br>");
+                outputString.append("<tr>");
+                outputString.append("<td>" + currentItem.getPrice() + "</td>");
+                outputString.append("<td>" + currentItem.getSerialNumber() + "</td>");
+                outputString.append("<td>" + currentItem.getName() + "</td>");
+                outputString.append("</tr>");
+
             }
+            //Close out our table element and output to file
+            outputString.append("</table></body></html>");
             writer.write(String.valueOf(outputString));
             writer.close();
         } catch (FileNotFoundException e) {
