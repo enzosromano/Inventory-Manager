@@ -31,6 +31,7 @@ public class MainWindowController {
     public TableColumn PriceColumn;
     public TextField filterField;
 
+
     MainWindowMethods methods = new MainWindowMethods();
     FileManagement fileManager = new FileManagement();
 

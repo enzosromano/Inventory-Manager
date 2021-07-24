@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 public class MainWindowTests {
 
+    ItemHolder holder = new ItemHolder();
     MainWindowMethods windowMethods = new MainWindowMethods();
 
     @Test

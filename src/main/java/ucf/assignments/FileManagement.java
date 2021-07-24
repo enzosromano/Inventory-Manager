@@ -94,7 +94,8 @@ public class FileManagement {
             //Go through our table and parse every single row
             for (int i = 1; i < rows.size(); i++) {
 
-                Elements tds = rows.select("td");
+                Element row = rows.get(i);
+                Elements tds = row.select("td");
                 BigDecimal price = new BigDecimal(tds.get(0).text());
                 String serial = tds.get(1).text();
                 String name = tds.get(2).text();

@@ -6,6 +6,7 @@ import java.io.File;
 
 public class FileManagementTests {
 
+    ItemHolder holder = new ItemHolder();
     FileManagement fileMethods = new FileManagement();
 
     @Test

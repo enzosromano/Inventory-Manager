@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class ItemHolder {
 
-    public static ObservableList<Item> itemList = FXCollections.observableArrayList();
-    public static Set<String> Serials = new HashSet<String>();
+    static ObservableList<Item> itemList = FXCollections.observableArrayList();
+    static Set<String> Serials = new HashSet<String>();
 
 }

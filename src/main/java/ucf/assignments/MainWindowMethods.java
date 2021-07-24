@@ -24,7 +24,6 @@ public class MainWindowMethods {
         }
         for(int i = 0; i < ItemHolder.itemList.size(); i++){
             if(ItemHolder.itemList.get(i).getSerialNumber().equals(itemSerialNumber)){
-                System.out.println(itemSerialNumber + " does match");
                 return false;
             }
         }
