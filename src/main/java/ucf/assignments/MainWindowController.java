@@ -154,10 +154,7 @@ public class MainWindowController {
         File toImport = fileChooser.showOpenDialog(null);
 
         String fileName = toImport.getName();
-        System.out.println(fileName);
         String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1, toImport.getName().length());
-        System.out.println(">> fileExtension" + fileExtension);
-
 
         if(fileExtension.equalsIgnoreCase("json")){
             if(!fileManager.importJson(toImport)){
