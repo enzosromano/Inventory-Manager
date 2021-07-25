@@ -16,6 +16,10 @@ Items:
 
     - Delete All: Clicking this will delete all items currently in our list
 
+Close:
+
+    - Close: Closes program
+
 
 ## Search Bar:
 ### Allows the user to search by keyword
